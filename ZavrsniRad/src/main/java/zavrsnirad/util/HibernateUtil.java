@@ -11,7 +11,6 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-
 /**
  *
  * @author jbalog8
@@ -21,8 +20,8 @@ public class HibernateUtil {
     private static Session session;
     
     public static Session getSession(){
-        if(session == null){
-            
+        if(session==null){
+            //upogoni hibernate
             try {
                 registry = new StandardServiceRegistryBuilder().configure().build();
                 MetadataSources sources = new MetadataSources(registry);
@@ -31,13 +30,13 @@ public class HibernateUtil {
                 session = sessionFactory.openSession();
             } catch (Exception e) {
                 e.printStackTrace();
-                if(registry != null){
+                if(registry!=null){
                     StandardServiceRegistryBuilder.destroy(registry);
                 }
             }
+            
         }
         return session;
-        
     }
     
     

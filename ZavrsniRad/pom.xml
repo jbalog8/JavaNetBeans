@@ -10,7 +10,8 @@
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
     </properties>
-     <dependencies>
+    
+    <dependencies>
         
         <!-- https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client -->
         <dependency>
@@ -30,5 +31,4 @@
 
         
     </dependencies>
-    
 </project>

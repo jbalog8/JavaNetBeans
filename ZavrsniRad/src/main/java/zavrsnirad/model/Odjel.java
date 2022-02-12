@@ -4,19 +4,17 @@
  */
 package zavrsnirad.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 /**
  *
- * @author jbalo
+ * @author jbalog8
  */
-@Entity(name = "Odjeli")
+@Entity
 public class Odjel {
     @Id
     private int sifra;
-    @Column(nullable = false)
     private String naziv;
 
     public int getSifra() {
@@ -34,5 +32,7 @@ public class Odjel {
     public void setNaziv(String naziv) {
         this.naziv = naziv;
     }
+   
+    
     
 }
