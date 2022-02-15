@@ -12,7 +12,7 @@ import javax.persistence.Id;
 
 /**
  *
- * @author CP
+ * @jbalog8
  */
 @Entity
 public class Mobitel {

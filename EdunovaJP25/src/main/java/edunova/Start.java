@@ -9,7 +9,7 @@ import edunova.util.HibernateUtil;
 
 /**
  *
- * @author tjakopec
+ * @author jbalog8
  */
 public class Start {
     

@@ -13,7 +13,7 @@ import javax.persistence.Id;
 
 /**
  *
- * @author CP
+ * @jbalog8
  */
 @Entity(name = "olovke")
 public class Olovka {
