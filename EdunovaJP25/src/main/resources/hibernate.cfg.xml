@@ -51,7 +51,12 @@ Potrebno je ručno kreirati bazu
         <!-- Ovdje ćemo navoditi mapirane klase -->
         <mapping class="edunova.model.vjezbanje.Mobitel" />
         <mapping class="edunova.model.vjezbanje.Olovka" />
+        <mapping class= "edunova.model.vjezbanje.nasljedivanje.Otpremnica"/>
+        <mapping class= "edunova.model.vjezbanje.nasljedivanje.Primka"/>
+        <mapping class="edunova.model.vjezbanje.veze.Opcina" />
+        <mapping class="edunova.model.vjezbanje.veze.Mjesto" />
         
+       
         
     </session-factory>
 </hibernate-configuration>
