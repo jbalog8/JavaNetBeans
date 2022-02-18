@@ -23,7 +23,7 @@ public class Start {
         this.session = HibernateUtil.getSession();
         
         //primjerRadaSVezama();
-       procitajOpcine();
+       //procitajOpcine();
     }
     
     private void procitajOpcine(){
