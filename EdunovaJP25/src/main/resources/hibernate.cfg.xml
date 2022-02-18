@@ -49,13 +49,19 @@ Potrebno je ručno kreirati bazu
         
         
         <!-- Ovdje ćemo navoditi mapirane klase -->
+         <!--
         <mapping class="edunova.model.vjezbanje.Mobitel" />
         <mapping class="edunova.model.vjezbanje.Olovka" />
         <mapping class= "edunova.model.vjezbanje.nasljedivanje.Otpremnica"/>
         <mapping class= "edunova.model.vjezbanje.nasljedivanje.Primka"/>
         <mapping class="edunova.model.vjezbanje.veze.Opcina" />
         <mapping class="edunova.model.vjezbanje.veze.Mjesto" />
-        
+         -->
+         <mapping class="edunova.model.Polaznik" />
+         <mapping class="edunova.model.Predavac" />
+         <mapping class="edunova.model.Smjer" />
+         <mapping class="edunova.model.Grupa" />
+         
        
         
     </session-factory>
