@@ -8,6 +8,7 @@ package edunova;
 import edunova.model.vjezbanje.veze.Mjesto;
 import edunova.model.vjezbanje.veze.Opcina;
 import edunova.util.HibernateUtil;
+import edunova.util.PocetniInsert;
 import java.util.List;
 import org.hibernate.Session;
 
@@ -21,6 +22,7 @@ public class Start {
 
     public Start() {
         this.session = HibernateUtil.getSession();
+        PocetniInsert.izvedi();
         
         //primjerRadaSVezama();
        //procitajOpcine();
