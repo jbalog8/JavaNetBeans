@@ -57,11 +57,17 @@ Potrebno je ručno kreirati bazu
         <mapping class="edunova.model.vjezbanje.veze.Opcina" />
         <mapping class="edunova.model.vjezbanje.veze.Mjesto" />
          -->
+          
          <mapping class="edunova.model.Polaznik" />
          <mapping class="edunova.model.Predavac" />
          <mapping class="edunova.model.Smjer" />
-         <mapping class="edunova.model.Grupa" />
-         
+         <mapping class="edunova.model.Grupe" />
+         <!--
+         <mapping class="edunova.model.vjezbanje.kodkuce.Polaznik />
+         <mapping class="edunova.model.vjezbanje.kodkuce.Predavac />
+         <mapping class="edunova.model.vjezbanje.kodkuce.Smjer />
+         <mapping class="edunova.model.vjezbanje.kodkuce.Grupa />
+         -->
        
         
     </session-factory>
