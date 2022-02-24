@@ -14,39 +14,47 @@ import org.hibernate.Session;
  * @author jbalog8
  */
 public abstract class Obrada<T> {
+
     protected Session session;
     protected T entitet;
-    
+
     public abstract List<T> read();
+
     protected abstract void kontorolaCreate() throws EdunovaException;
+
     protected abstract void kontorlaUpdate() throws EdunovaException;
+
     protected abstract void kontrolaDelete() throws EdunovaException;
-    
-    public Obrada(){
+
+    public Obrada() {
         session = HibernateUtil.getSession();
-        
+
     }
-    public T create () throws EdunovaException{
+
+    public T create() throws EdunovaException {
         kontorolaCreate();
         save();
         return entitet;
     }
-    public T update() throws EdunovaException{
+
+    public T update() throws EdunovaException {
         kontorlaUpdate();
         save();
         return entitet;
     }
-    public void delete() throws EdunovaException{
+
+    public void delete() throws EdunovaException {
         kontrolaDelete();
         session.beginTransaction();
         session.delete(entitet);
         session.getTransaction().commit();
     }
-    private void save(){
+
+    private void save() {
         session.beginTransaction();
         session.save(entitet);
         session.getTransaction().commit();
-        
+
     }
 
     public T getEntitet() {
@@ -56,6 +64,5 @@ public abstract class Obrada<T> {
     public void setEntitet(T entitet) {
         this.entitet = entitet;
     }
-    
-    
+
 }
