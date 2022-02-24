@@ -5,8 +5,11 @@
  */
 package edunova;
 
+import edunova.kontroler.ObradaPredavac;
+import edunova.model.Predavac;
 import edunova.model.vjezbanje.veze.Mjesto;
 import edunova.model.vjezbanje.veze.Opcina;
+import edunova.util.EdunovaException;
 import edunova.util.HibernateUtil;
 import edunova.util.PocetniInsert;
 import java.util.List;
@@ -17,29 +20,30 @@ import org.hibernate.Session;
  * @author jbalog8
  */
 public class Start {
-    
+
     private Session session;
 
     public Start() {
         this.session = HibernateUtil.getSession();
-        PocetniInsert.izvedi();
-        
+        //PocetniInsert.izvedi();
+        //testiranjeUnosaPredavaca();
+
         //primjerRadaSVezama();
-       //procitajOpcine();
+        //procitajOpcine();
     }
-    
-    private void procitajOpcine(){
+
+    private void procitajOpcine() {
         // čitati https://docs.jboss.org/hibernate/core/3.3/reference/en/html/queryhql.html
         // u dijelu upita Opcina tekst mora odgovarati imenu klase
         List<Opcina> opcine = session.createQuery("from Opcina").list();
-        
-        for(Opcina o:opcine){
+
+        for (Opcina o : opcine) {
             System.out.println(o.getNaziv());
-            o.getMjesta().forEach(m->System.out.println(m.getNaziv()));
+            o.getMjesta().forEach(m -> System.out.println(m.getNaziv()));
         }
     }
-    
-    private void primjerRadaSVezama(){
+
+    private void primjerRadaSVezama() {
         session.beginTransaction();
         Opcina opcina = new Opcina();
         opcina.setNaziv("Bilje");
@@ -48,17 +52,16 @@ public class Start {
         mjesto.setNaziv("Kopačevo");
         mjesto.setOpcina(opcina);
         session.save(mjesto);
-        
+
         mjesto = new Mjesto();
         mjesto.setNaziv("Bilje");
         mjesto.setOpcina(opcina);
         session.save(mjesto);
-         session.getTransaction().commit();;
+        session.getTransaction().commit();;
     }
-    
-    
+
     public static void main(String[] args) {
-    new Start();
+        new Start();
         /*
         Session s = HibernateUtil.getSession();
        
@@ -73,7 +76,22 @@ public class Start {
         s.beginTransaction();
         s.save(m);
         s.getTransaction().commit();
-*/
+         */
     }
-    
+    private void testiranjeUnosaPredavaca() {
+         Predavac predavac = new Predavac();
+        predavac.setOib("34727507038");
+        predavac.setIme("Ana");
+        predavac.setPrezime("Osječka");
+        predavac.setIban("HR0823400098942437554");
+        predavac.setEmail("ana@osječka");
+        ObradaPredavac op = new ObradaPredavac();
+        op.setEntitet(predavac);
+        try {
+            op.create();
+        } catch (EdunovaException ex) {
+            System.out.println(ex.getPoruka());
+        }
+    }
+
 }
