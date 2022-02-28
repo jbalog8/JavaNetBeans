@@ -13,7 +13,7 @@ import javax.mail.internet.InternetAddress;
 
 /**
  *
- * @author CP
+ * @author jbalog8
  */
 public class Autorizacija extends javax.swing.JFrame {
 
