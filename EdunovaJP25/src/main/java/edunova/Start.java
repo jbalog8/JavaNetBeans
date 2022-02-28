@@ -12,6 +12,7 @@ import edunova.model.vjezbanje.veze.Opcina;
 import edunova.util.EdunovaException;
 import edunova.util.HibernateUtil;
 import edunova.util.PocetniInsert;
+import edunova.view.SplashScreen;
 import java.util.List;
 import org.hibernate.Session;
 
@@ -61,7 +62,10 @@ public class Start {
     }
 
     public static void main(String[] args) {
-        new Start();
+       // new Start();
+        new SplashScreen().setVisible(true);
+        
+        
         /*
         Session s = HibernateUtil.getSession();
        
