@@ -5,11 +5,15 @@
  */
 package edunova.view;
 
-import edunova.util.EdunovaException;
+
+import edunova.kontroler.ObradaOperater;
+import edunova.model.Operater;
+import edunova.util.EdunovaUtil;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,14 +21,24 @@ import javax.mail.internet.InternetAddress;
  */
 public class Autorizacija extends javax.swing.JFrame {
 
+    private ObradaOperater obradaOperater;
+
     /**
      * Creates new form Autorizacija
      */
     public Autorizacija() {
         initComponents();
+        postavke();
+    }
+     private void postavke() {
+       obradaOperater = new ObradaOperater();
         txtEmail.setText("edunova@edunova.hr");
         txtLozinka.setText("e");
+        setTitle(EdunovaUtil.getNaslov("Autorizacija"));
     }
+    
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -123,20 +137,20 @@ public class Autorizacija extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyPressed
-        if(txtEmail.getText().trim().isEmpty()){
+        if (txtEmail.getText().trim().isEmpty()) {
             return;
         }
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtLozinka.requestFocus();
         }
     }//GEN-LAST:event_txtEmailKeyPressed
 
     private void txtLozinkaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLozinkaKeyPressed
-        if(txtEmail.getText().trim().isEmpty()){
+        if (txtEmail.getText().trim().isEmpty()) {
             txtEmail.requestFocus();
             return;
-        } 
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        }
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             autorizacija();
         }
     }//GEN-LAST:event_txtLozinkaKeyPressed
@@ -154,39 +168,45 @@ public class Autorizacija extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEmailFocusLost
 
     private void txtLozinkaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtLozinkaFocusGained
-         txtLozinka.setBackground(Color.GRAY);
+        txtLozinka.setBackground(Color.GRAY);
     }//GEN-LAST:event_txtLozinkaFocusGained
 
     private void txtLozinkaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtLozinkaFocusLost
-         txtLozinka.setBackground(Color.WHITE);
+        txtLozinka.setBackground(Color.WHITE);
     }//GEN-LAST:event_txtLozinkaFocusLost
 
-    private void autorizacija(){
-        if(txtEmail.getText().trim().isEmpty()){
+    private void autorizacija() {
+        if (txtEmail.getText().trim().isEmpty()) {
             txtEmail.requestFocus();
             return;
-        } 
-        
-         if(txtLozinka.getPassword().length==0){
+        }
+
+        if (txtLozinka.getPassword().length == 0) {
             txtLozinka.requestFocus();
             return;
-        } 
-         
-          try {
+        }
+
+        try {
             InternetAddress emailAddr = new InternetAddress(txtEmail.getText());
             emailAddr.validate();
         } catch (AddressException ex) {
             txtEmail.requestFocus();
             return;
         }
-         
-         // ovdje si siguran da su uneseni email i lozinka
-         System.out.println(txtEmail.getText() + " " + new String(txtLozinka.getPassword()));
-         
-         
-         
+
+        // ovdje si siguran da su uneseni email i lozinka
+        Operater operater = obradaOperater.autorizraj(txtEmail.getText(), new String(txtLozinka.getPassword()));
+        if(operater == null){
+            JOptionPane.showMessageDialog(getRootPane(), "Neispravna kombinacija email-a i lozinke");
+            return;
+        }
+        EdunovaUtil.operater = operater;
+        
+        new Izbornik().setVisible(true);
+        dispose();
+
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPrijava;
@@ -195,4 +215,6 @@ public class Autorizacija extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmail;
     private javax.swing.JPasswordField txtLozinka;
     // End of variables declaration//GEN-END:variables
+
+   
 }
