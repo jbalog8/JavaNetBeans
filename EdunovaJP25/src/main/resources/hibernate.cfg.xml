@@ -62,6 +62,7 @@ Potrebno je ručno kreirati bazu
          <mapping class="edunova.model.Predavac" />
          <mapping class="edunova.model.Smjer" />
          <mapping class="edunova.model.Grupe" />
+         <mapping class="edunova.model.Operater" />
          <!--
          <mapping class="edunova.model.vjezbanje.kodkuce.Polaznik />
          <mapping class="edunova.model.vjezbanje.kodkuce.Predavac />
