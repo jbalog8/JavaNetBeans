@@ -11,7 +11,6 @@ import edunova.model.vjezbanje.veze.Mjesto;
 import edunova.model.vjezbanje.veze.Opcina;
 import edunova.util.EdunovaException;
 import edunova.util.HibernateUtil;
-import edunova.util.PocetniInsert;
 import edunova.view.SplashScreen;
 import java.util.List;
 import org.hibernate.Session;
@@ -62,11 +61,10 @@ public class Start {
     }
 
     public static void main(String[] args) {
-       // new Start();
+        // new Start();
         new SplashScreen().setVisible(true);
-       // PocetniInsert.unosOperatera();
-        
-        
+        // PocetniInsert.unosOperatera();
+
         /*
         Session s = HibernateUtil.getSession();
        
@@ -83,8 +81,9 @@ public class Start {
         s.getTransaction().commit();
          */
     }
+
     private void testiranjeUnosaPredavaca() {
-         Predavac predavac = new Predavac();
+        Predavac predavac = new Predavac();
         predavac.setOib("34727507038");
         predavac.setIme("Ana");
         predavac.setPrezime("Osječka");
