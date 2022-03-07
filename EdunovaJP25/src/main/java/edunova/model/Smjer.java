@@ -5,7 +5,9 @@
 package edunova.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -18,6 +20,9 @@ public class Smjer extends Entitet{
     private Integer trajanje;
     private BigDecimal cijena;
     private Boolean certificiran;
+    
+    @OneToMany(mappedBy = "smjer")
+     private List<Grupe> grupe;
 
     public String getNaziv() {
         return naziv;
@@ -49,7 +54,23 @@ public class Smjer extends Entitet{
 
     public void setCertificiran(Boolean certificiran) {
         this.certificiran = certificiran;
+        
     }
+
+    public List<Grupe> getGrupe() {
+        return grupe;
+    }
+
+    public void setGrupe(List<Grupe> grupe) {
+        this.grupe = grupe;
+    }
+
+    @Override
+    public String toString() {
+        return naziv; 
+    }
+    
+    
     
     
 }
