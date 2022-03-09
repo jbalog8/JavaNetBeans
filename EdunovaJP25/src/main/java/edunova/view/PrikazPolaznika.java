@@ -15,6 +15,7 @@ import javax.swing.ListCellRenderer;
  *
  * @author jbalog8
  */
+@Deprecated(since = "Prebacio na PrikazOsoba")
 public class PrikazPolaznika extends JLabel implements ListCellRenderer<Polaznik>{
     
     public PrikazPolaznika(){
