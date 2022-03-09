@@ -29,7 +29,7 @@ public class PolaznikProzor extends javax.swing.JFrame {
     public PolaznikProzor() {
         initComponents();
         obrada = new ObradaPolaznik();
-        lstEntiteti.setCellRenderer(new PrikazPolaznika());
+        lstEntiteti.setCellRenderer(new PrikazOsoba());
         setTitle(EdunovaUtil.getNaslov("Polaznici"));
         ucitaj();
     }
