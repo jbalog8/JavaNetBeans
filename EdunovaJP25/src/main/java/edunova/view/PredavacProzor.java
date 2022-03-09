@@ -29,7 +29,7 @@ public class PredavacProzor extends javax.swing.JFrame {
     public PredavacProzor() {
         initComponents();
         obrada = new ObradaPredavac();
-        lstEntiteti.setCellRenderer(new PrikazPredavac());
+        lstEntiteti.setCellRenderer(new PrikazOsoba());
         setTitle(EdunovaUtil.getNaslov("Predavaci"));
         ucitaj();
     }
