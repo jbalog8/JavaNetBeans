@@ -4,7 +4,9 @@
  */
 package edunova.model;
 
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 
 /**
  *
@@ -14,6 +16,9 @@ import javax.persistence.Entity;
 public class Polaznik extends Osoba{
     
      private String brojUgovora;
+     
+     @ManyToMany(mappedBy = "polaznici")
+     private List<Grupe> grupe;
 
     public String getBrojUgovora() {
         return brojUgovora;
@@ -22,6 +27,15 @@ public class Polaznik extends Osoba{
     public void setBrojUgovora(String brojUgovora) {
         this.brojUgovora = brojUgovora;
     }
+
+    public List<Grupe> getGrupe() {
+        return grupe;
+    }
+
+    public void setGrupe(List<Grupe> grupe) {
+        this.grupe = grupe;
+    }
+    
      
      
 }
