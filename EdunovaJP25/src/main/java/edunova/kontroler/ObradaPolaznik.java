@@ -17,7 +17,25 @@ public class ObradaPolaznik extends ObradaOsoba<Polaznik> {
     @Override
     public List<Polaznik> read() {
         return session.createQuery("from Polaznik").list();
+        
     }
+     public List<Polaznik> read(String uvjet) {
+        return session.createQuery("from Polaznik p " 
+                + "where concat(p.ime,' ', p.prezime)"
+                + "like : uvjet order by p.prezime, p.ime")
+                .setParameter("uvjet", "%" + uvjet + "%")
+                .setMaxResults(50)
+                .list();
+    }
+    
+    public List<Polaznik> readPocetakPrezimena(String uvjet) {
+        return session.createQuery("from Polaznik p " 
+                + "where concat(p.ime,' ', p.prezime)"
+                + "like : uvjet order by p.prezime, p.ime")
+                .setParameter("uvjet", "%" + uvjet + "%")
+                .setMaxResults(50)
+                .list();
+}
 
     @Override
     protected void kontorolaCreate() throws EdunovaException {
@@ -31,4 +49,5 @@ public class ObradaPolaznik extends ObradaOsoba<Polaznik> {
         }
 
     }
+   
 }
