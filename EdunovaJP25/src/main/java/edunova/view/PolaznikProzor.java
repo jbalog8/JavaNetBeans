@@ -38,7 +38,7 @@ public class PolaznikProzor extends javax.swing.JFrame {
         DefaultListModel<Polaznik> m = new DefaultListModel<>();
         List<Polaznik> entiteti;
         if (chbPocetakPrezimena.isSelected()) {
-            entiteti = obrada.readPocetakPrezimena(txtUvjet.getText().trim());
+            entiteti = obrada.readPocetakPrezime(txtUvjet.getText().trim());
         } else {
             entiteti = obrada.read(txtUvjet.getText().trim());
         }
@@ -361,7 +361,7 @@ public class PolaznikProzor extends javax.swing.JFrame {
 
             try {
                 obrada.update();
-            } catch (Exception e) {
+            } catch (EdunovaException ex) {
             }
         }
         txtUvjet.setText(txtNovoPrezime.getText());
