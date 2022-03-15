@@ -28,9 +28,9 @@ public class ObradaPolaznik extends ObradaOsoba<Polaznik> {
                 .list();
     }
     
-    public List<Polaznik> readPocetakPrezimena(String uvjet) {
+    public List<Polaznik> readPocetakPrezime(String uvjet) {
         return session.createQuery("from Polaznik p " 
-                + "where concat(p.ime,' ', p.prezime)"
+                + "where concat(p.prezime)"
                 + "like : uvjet order by p.prezime, p.ime")
                 .setParameter("uvjet", "%" + uvjet + "%")
                 .setMaxResults(50)
