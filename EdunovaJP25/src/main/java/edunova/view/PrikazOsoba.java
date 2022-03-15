@@ -33,7 +33,7 @@ public class PrikazOsoba extends JLabel implements ListCellRenderer<Osoba> {
             setForeground(Color.BLACK);
         }
 
-        setText((value.getIme() == null ? "Nepoznato" : value.getIme())
+        setText((value.getIme() == null ? "Nepoznato" : value.getIme().equals("") ? "XXXXXXX" :  value.getIme())
                 + " " + (value.getPrezime() == null ? "Nepoznato" : value.getPrezime()));
 
         return this;
