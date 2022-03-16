@@ -5,13 +5,18 @@
  */
 package edunova.view;
 
+import com.github.lgooddatepicker.components.DatePickerSettings;
 import edunova.kontroler.ObradaGrupe;
+import edunova.kontroler.ObradaPredavac;
 import edunova.kontroler.ObradaSmjer;
 import edunova.model.Grupe;
+import edunova.model.Predavac;
 import edunova.model.Smjer;
 import edunova.util.EdunovaException;
 import edunova.util.EdunovaUtil;
+import java.time.ZoneId;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -34,7 +39,15 @@ public class GrupaProzor extends javax.swing.JFrame {
         
         setTitle(EdunovaUtil.getNaslov("Grupe"));
         ucitaj();
-        
+        ucitajSmjerove();
+        ucitajPredavace();
+        DatePickerSettings dps = new DatePickerSettings(new Locale("hr","HR"));
+        dps.setFormatForDatesCommonEra("dd.MM.yyyy");
+        dps.setTranslationClear("Ocisti");
+        dps.setTranslationToday("Danas");
+        dpDatumPocetka.setSettings(dps);
+    }
+    private void ucitajSmjerove(){
         DefaultComboBoxModel<Smjer> ms = new DefaultComboBoxModel<>();
         Smjer smjer = new Smjer();
         smjer.setSifra(Long.valueOf(0));
@@ -43,6 +56,18 @@ public class GrupaProzor extends javax.swing.JFrame {
         new ObradaSmjer().read().forEach(s->{ms.addElement(s);});
         cmbSmjerovi.setModel(ms);
     }
+     private void ucitajPredavace(){
+        DefaultComboBoxModel<Predavac> ms = new DefaultComboBoxModel<>();
+        Predavac predavac = new Predavac();
+        predavac.setSifra(Long.valueOf(0));
+        predavac.setIme("Nije");
+        predavac.setPrezime("odabrano");
+        ms.addElement(predavac);
+        new ObradaPredavac().read().forEach(s->{ms.addElement(s);});
+        cmbPredavaci.setModel(ms);
+     }
+    
+    
 
     private void ucitaj() {
         DefaultListModel<Grupe> m = new DefaultListModel<>();
@@ -72,6 +97,10 @@ public class GrupaProzor extends javax.swing.JFrame {
         btnObrisi = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         cmbSmjerovi = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        cmbPredavaci = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        dpDatumPocetka = new com.github.lgooddatepicker.components.DatePicker();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -107,6 +136,10 @@ public class GrupaProzor extends javax.swing.JFrame {
 
         jLabel2.setText("Smjerovi");
 
+        jLabel3.setText("Predavaci");
+
+        jLabel4.setText("Datum pocetka");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -114,47 +147,52 @@ public class GrupaProzor extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbSmjerovi, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnKreiraj)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPromjeni)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnObrisi)))
+                        .addComponent(btnObrisi))
+                    .addComponent(jLabel4)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(cmbSmjerovi, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cmbPredavaci, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(dpDatumPocetka, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)))
                 .addContainerGap(259, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNaziv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cmbSmjerovi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbPredavaci, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dpDatumPocetka, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnKreiraj)
                             .addComponent(btnPromjeni)
-                            .addComponent(btnObrisi))
-                        .addGap(32, 32, 32)))
+                            .addComponent(btnObrisi)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE))
                 .addGap(29, 29, 29))
         );
 
@@ -169,6 +207,24 @@ public class GrupaProzor extends javax.swing.JFrame {
         obrada.setEntitet(lstEntiteti.getSelectedValue());
         var e = obrada.getEntitet();
         txtNaziv.setText(e.getNaziv());
+        
+        if(e.getSmjer() == null){
+            cmbSmjerovi.setSelectedIndex(0);
+        }else{
+            cmbSmjerovi.setSelectedItem(e.getSmjer());
+        }
+        
+        if(e.getPredavac() == null){
+            cmbPredavaci.setSelectedIndex(0);
+        }else{
+            cmbPredavaci.setSelectedItem(e.getPredavac());
+        }
+        if(e.getDatumPocetka() != null){
+            dpDatumPocetka.setDate(e.getDatumPocetka().toInstant()
+                    .atZone(ZoneId.systemDefault()).toLocalDate());
+        }else{
+            dpDatumPocetka.setDate(null);
+        }
         
 
 
@@ -238,9 +294,13 @@ public class GrupaProzor extends javax.swing.JFrame {
     private javax.swing.JButton btnKreiraj;
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnPromjeni;
+    private javax.swing.JComboBox<Predavac> cmbPredavaci;
     private javax.swing.JComboBox<Smjer> cmbSmjerovi;
+    private com.github.lgooddatepicker.components.DatePicker dpDatumPocetka;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<Grupe> lstEntiteti;
     private javax.swing.JTextField txtNaziv;
