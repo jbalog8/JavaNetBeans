@@ -21,7 +21,7 @@ public class ObradaGrupe extends Obrada<Grupe> {
 
     @Override
     protected void kontorolaCreate() throws EdunovaException {
-
+        kontrolaSmjer();
     }
 
     @Override
@@ -32,6 +32,13 @@ public class ObradaGrupe extends Obrada<Grupe> {
     @Override
     protected void kontrolaDelete() throws EdunovaException {
 
+    }
+
+    private void kontrolaSmjer() throws EdunovaException{
+       
+        if(entitet.getSmjer()== null || entitet.getSmjer().getSifra().equals(Long.valueOf(0))){
+            throw new EdunovaException("Obavezan odabir smjera");
+        }
     }
 
 }
