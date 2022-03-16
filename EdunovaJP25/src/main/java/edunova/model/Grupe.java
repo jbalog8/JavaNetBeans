@@ -65,6 +65,12 @@ public class Grupe extends Entitet{
     public void setSmjer(Smjer smjer) {
         this.smjer = smjer;
     }
+
+    @Override
+    public String toString() {
+        return naziv;
+    }
+    
     
     
     
