@@ -6,6 +6,10 @@
 package edunova.view;
 
 import com.github.lgooddatepicker.components.DatePickerSettings;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import edunova.kontroler.ObradaGrupe;
 import edunova.kontroler.ObradaPolaznik;
 import edunova.kontroler.ObradaPredavac;
@@ -18,6 +22,10 @@ import edunova.model.Smjer;
 import edunova.util.EdunovaException;
 import edunova.util.EdunovaUtil;
 import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.nio.charset.StandardCharsets;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,6 +34,7 @@ import java.util.List;
 import java.util.Locale;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -145,6 +154,7 @@ public class GrupaProzor extends javax.swing.JFrame {
         chbPocetakPrezimena = new javax.swing.JCheckBox();
         btnDodajPolaznike = new javax.swing.JButton();
         btnObrisiPolaznike = new javax.swing.JButton();
+        btnExportJSON = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -251,6 +261,18 @@ public class GrupaProzor extends javax.swing.JFrame {
         });
 
         btnObrisiPolaznike.setText(">>");
+        btnObrisiPolaznike.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnObrisiPolaznikeActionPerformed(evt);
+            }
+        });
+
+        btnExportJSON.setText("Export JSON");
+        btnExportJSON.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportJSONActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -266,7 +288,9 @@ public class GrupaProzor extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnPromjeni)
                         .addGap(18, 18, 18)
-                        .addComponent(btnObrisi))
+                        .addComponent(btnObrisi)
+                        .addGap(69, 69, 69)
+                        .addComponent(btnExportJSON))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(dpDatumPocetka, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -337,7 +361,8 @@ public class GrupaProzor extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnKreiraj)
                             .addComponent(btnPromjeni)
-                            .addComponent(btnObrisi))
+                            .addComponent(btnObrisi)
+                            .addComponent(btnExportJSON))
                         .addGap(24, 24, 24))))
         );
 
@@ -470,6 +495,67 @@ public class GrupaProzor extends javax.swing.JFrame {
       lstPolazniciNaGrupi.repaint(); 
     }//GEN-LAST:event_btnDodajPolaznikeActionPerformed
 
+    private void btnObrisiPolaznikeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObrisiPolaznikeActionPerformed
+        DefaultListModel<Polaznik> m = (DefaultListModel<Polaznik>)lstPolazniciNaGrupi.getModel();
+        for(Polaznik p : lstPolazniciNaGrupi.getSelectedValuesList()){
+            m.removeElement(p);
+            for(Polaznik mp : obrada.getEntitet().getPolaznici()){
+                if(mp.getSifra().equals(p.getSifra())){
+                    obrada.getEntitet().getPolaznici().remove(mp);
+                    break;
+                }
+            }
+            lstPolazniciNaGrupi.repaint();
+        }
+    }//GEN-LAST:event_btnObrisiPolaznikeActionPerformed
+
+    private void btnExportJSONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportJSONActionPerformed
+         
+        ExclusionStrategy strategija = new ExclusionStrategy() {
+            @Override
+            public boolean shouldSkipField(FieldAttributes fa) {
+                if(fa.getDeclaringClass()==Smjer.class && fa.getName().equals("grupe")){
+                    return true;
+                }
+                if(fa.getDeclaringClass()==Predavac.class && fa.getName().equals("grupe")){
+                    return true;
+                }
+                if(fa.getDeclaringClass()==Polaznik.class && fa.getName().equals("grupe")){
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public boolean shouldSkipClass(Class<?> type) {
+               return false;
+            }
+        };
+        
+         Gson gson = new GsonBuilder()
+                .setExclusionStrategies(strategija)
+                .setPrettyPrinting()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+                .create();
+         
+         JFileChooser jfc = new JFileChooser();
+        jfc.setCurrentDirectory(new File(System.getProperty("user.home")));
+        jfc.setSelectedFile(new File(System.getProperty("user.home") + 
+                File.separator + "grupe.json"));
+        if(jfc.showSaveDialog(this)==JFileChooser.APPROVE_OPTION){
+            try {
+                BufferedWriter writer = new BufferedWriter(
+                new FileWriter(jfc.getSelectedFile(),StandardCharsets.UTF_8));
+                
+                writer.write(gson.toJson(obrada.read()));
+                writer.close();
+                
+            } catch (Exception e) {
+            }
+        }
+        
+    }//GEN-LAST:event_btnExportJSONActionPerformed
+
      private boolean postojiPolaznikUGrupi(DefaultListModel<Polaznik> m, Polaznik p) {
         for(int i=0;i<m.size();i++){
             if(m.get(i).getSifra().equals(p.getSifra())){
@@ -503,6 +589,7 @@ public class GrupaProzor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDodajPolaznike;
+    private javax.swing.JButton btnExportJSON;
     private javax.swing.JButton btnKreiraj;
     private javax.swing.JButton btnObrisi;
     private javax.swing.JButton btnObrisiPolaznike;
